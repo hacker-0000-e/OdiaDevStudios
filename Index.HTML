@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odia Developer Studios Presents...</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Creepster', cursive;
+            background: black;
+            color: white;
+            overflow-x: hidden;
+        }
+        .header {
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(to bottom, red, black);
+        }
+        .section {
+            padding: 50px;
+            text-align: center;
+        }
+        .parallax {
+            background: url('https://source.unsplash.com/1600x900/?horror,dark') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px black;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            color: white;
+            background: red;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: darkred;
+        }
+        .image-container {
+            margin: 20px;
+            flex-shrink: 0;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            max-width: 300px; /* Set a maximum width */
+            height: auto; /* Maintain aspect ratio */
+            cursor: pointer;
+        }
+        #screenshots {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 20px;
+            gap: 10px;
+        }
+        #screenshots::-webkit-scrollbar {
+            height: 8px;
+        }
+        #screenshots::-webkit-scrollbar-thumb {
+            background: red;
+            border-radius: 10px;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9); /* Background color */
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .modal-content {
+            max-width: 80%;
+            max-height: 80%;
+        }
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome to ("Name of the Game")</h1>
+    </div>
+    <div class="section" id="about">
+        <h2>About the Game</h2>
+        <p>
+            "Name of the Game" is an immersive first-person horror experience that plunges players into a terrifying world filled with danger, mystery, and intrigue. Set in an abandoned environment, you must navigate through dark, eerie locations while avoiding deadly creatures and uncovering the secrets of a mad scientist's twisted experiments. 
+            The game challenges players with various puzzles, terrifying encounters, and an atmosphere of dread. The story unfolds as you search for another human being, and every step you take brings you closer to the horrifying truth about the scientist and his experiments.
+        </p>
+    </div>
+    <div class="parallax">Screenshots</div>
+    <div class="section" id="screenshots">
+        <!-- Images will be dynamically inserted here -->
+    </div>
+    <div class="section" id="story">
+        <h2>Story</h2>
+        <p>
+            You wake up in an eerie, abandoned world, with no recollection of how you arrived. The only trace of life is the voice of a scientist calling out to you through distorted radio transmissions. You must traverse through dark forests, decaying buildings, and haunted ruins in search of another human, all while being hunted by terrifying creatures created by the mad scientist. 
+            As you explore, you uncover fragments of the scientist’s twisted research and horrific experiments, leading you to believe that there may be more to the world’s abandonment than you originally thought. Will you survive long enough to uncover the full story? 
+        </p>
+    </div>
+    <div class="section" id="download">
+        <h2>("Name OF the Game")</h2>
+        <a href="#" class="btn">PlayStore Link</a> <!-- Link can be updated here -->
+    </div>
+    <div class="section" id="contact">
+        <h2>Contact</h2>
+        <p>Reach out for support or updates.</p>
+        <p>Email: <a href="mailto:barikjitendra2004@gmail.com">barikjitendra2004@gmail.com</a></p>
+        <p>Phone: +1 234 567 890</p>
+    </div>
+
+    <!-- Modal for enlarged image -->
+    <div id="modal" class="modal">
+        <span class="close" id="closeModal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        // Function to load images from the 'images' folder
+        function loadImages() {
+            const imageFolder = 'images/'; // Path to the images folder
+            const screenshotsContainer = document.getElementById('screenshots');
+
+            // Example: Assume you have 5 images named Screenshot1.png, Screenshot2.png, etc.
+            const numberOfImages = 5; // Update this number based on the number of images in the folder
+
+            for (let i = 1; i <= numberOfImages; i++) {
+                const img = document.createElement('img');
+                img.src = `${imageFolder}Screenshot${i}.png`; // Updated to .png extension
+                img.alt = `Screenshot ${i}`;
+                img.classList.add('image-container');
+
+                // Handle image click to open in modal
+                img.onclick = function() {
+                    openModal(img.src);
+                };
+
+                // Handle missing images
+                img.onerror = function() {
+                    console.error(`Failed to load image: ${img.src}`);
+                    img.style.display = 'none'; // Hide the broken image
+                };
+
+                screenshotsContainer.appendChild(img);
+            }
+        }
+
+        // Function to open modal and display the clicked image
+        function openModal(imageSrc) {
+            const modal = document.getElementById('modal');
+            const modalImage = document.getElementById('modalImage');
+            modal.style.display = 'flex'; // Show modal
+            modalImage.src = imageSrc; // Set the image source for the modal
+        }
+
+        // Function to close modal
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.style.display = 'none'; // Hide modal
+        }
+
+        // Add event listener to close modal when clicked outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        };
+
+        // Call the function to load images when the page loads
+        window.onload = loadImages;
+        
+        // Close modal when close button is clicked
+        document.getElementById('closeModal').onclick = closeModal;
+    </script>
+</body>
+</html>
